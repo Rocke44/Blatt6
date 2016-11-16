@@ -8,15 +8,18 @@ import de.fhaachen.funktionen.Function;
 public class BisectionMethod implements Method{
     @Override
     public double findRoot(Function f, double xMin, double xMax){
-         double a, b;
-        if(xMin<xMax) {
-            a = xMin;
-            b = xMax;
-        }else{
-            a = xMax;
-            b = xMin;
-        }
+        double a = Math.min(xMin,xMax);
+        double b = Math.max(xMin,xMax);
+        Function g;
 
+        if(Math.signum(f.getY(a))==Math.signum(f.getY(b))){
+            throw new ArithmeticException("Not sure if f(x)=0 exists");
+        }
+        if(f.getY(a)<f.getY(b)){
+            g = x -> (-1.0 * f.getY(x));
+        }else{
+            g = f;
+        }
 
         double m = (a+b)/2;
 
