@@ -3,11 +3,11 @@ package de.fhaachen.nullstellenmethoden;
 import de.fhaachen.funktionen.Function;
 
 /**
- * Created by jrocke on 14.11.16.
+ * Created by jrocke on 11/18/16.
  */
-public class BisectionMethod implements Method{
+public class SecantMethod implements Method {
     @Override
-    public double findRoot(Function f, double xMin, double xMax){
+    public double findRoot(Function f , double xMin , double xMax ){
         double a = Math.min(xMin,xMax);
         double b = Math.max(xMin,xMax);
         Function g;
@@ -21,15 +21,15 @@ public class BisectionMethod implements Method{
             g = f;
         }
 
-        double m = (a+b)/2;
+        double m = (a*g.getY(b)-b*g.getY(a))/(g.getY(b)-g.getY(a));
 
-        while(! (Math.abs( f.getY(m) ) < Math.pow(10,-10) ) ){
-            if(g.getY(m)<0){
+        while(! (Math.abs( g.getY(m) ) < Math.pow(10,-10) ) ){
+            if(g.getY(m) < 0){
                 a = m;
             }else{
                 b = m;
             }
-            m = (a+b)/2;
+            m = (a*g.getY(b)-b*g.getY(a))/(g.getY(b)-g.getY(a));
         }
 
         return m;
